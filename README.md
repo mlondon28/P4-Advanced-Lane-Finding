@@ -11,20 +11,20 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: .Writeup/images/undistort_example.png "Original Image / Undistorted Image"
-[image2]: .Writeup/images/hls_binary.png "HLS Binary"
-[image3]: .Writeup/images/R_sobels.png "Sobel Filters on Red Channel"
-[image4]: .Writeup/images/R_thresh.png "Red Sobel Threshold"
-[image5]: .Writeup/images/L_sobel.png "Luminance Sobel Threshold"
-[image6]: .Writeup/images/S_sobel.png "Saturation Sobel Threshold"
-[image7]: .Writeup/images/ycrcb_binary.png "YCrCb Binary"
-[image8]: .Writeup/images/combined.png "Combined Binary"
-[image9]: .Writeup/images/histogram.png "Histogram of Lane Lines"
-[image10]: .Writeup/images/sliding_window_plt.png "Sliding Window"
-[image11]: .Writeup/images/identified_lanes_warped.png "Identified Lanes"
-[image12]: .Writeup/images/radius_equation.png "Radius Equation"
-[image13]: .Writeup/images/projected_lane.png "Projected Lane"
-[image14]: .Writeup/Videos/short_output11.gif "Output Gif"
+[image1]: Writeup/images/undistort_example.png "Original Image / Undistorted Image"
+[image2]: Writeup/images/hls_binary.png "HLS Binary"
+[image3]: Writeup/images/R_sobels.png "Sobel Filters on Red Channel"
+[image4]: Writeup/images/R_thresh.png "Red Sobel Threshold"
+[image5]: Writeup/images/L_sobel.png "Luminance Sobel Threshold"
+[image6]: Writeup/images/S_sobel.png "Saturation Sobel Threshold"
+[image7]: Writeup/images/ycrcb_binary.png "YCrCb Binary"
+[image8]: Writeup/images/combined.png "Combined Binary"
+[image9]: Writeup/images/histogram.png "Histogram of Lane Lines"
+[image10]: Writeup/images/sliding_window_plt.png "Sliding Window"
+[image11]: Writeup/images/identified_lanes_warped.png "Identified Lanes"
+[image12]: Writeup/images/radius_equation.png "Radius Equation"
+[image13]: Writeup/images/projected_lane.png "Projected Lane"
+[image14]: Writeup/Videos/short_output11.gif "Output Gif"
 
 
 ---
