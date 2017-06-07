@@ -131,7 +131,7 @@ def dir_threshold(image, sobel_kernel=3, thresh=(0, np.pi/2)):
     dir_binary[(grad_dir >= thresh[0]) & (grad_dir <= thresh[1])] = 1
     return dir_binary
 
-def showImages(img1, img2,title1='Original', title2='Modified', testing=True):
+def showImages(img1, img2,title1='Original', title2='Modified', testing=False):
     if testing == True:
         f, (ax1, ax2) = plt.subplots(1, 2, figsize=(24, 9))
         f.tight_layout()
@@ -143,7 +143,7 @@ def showImages(img1, img2,title1='Original', title2='Modified', testing=True):
         plt.show()
     return
 
-def show4images(img1,img2,img3,img4,title1='Original',title2='img2',title3='img3',title4='img4', testing=True):
+def show4images(img1,img2,img3,img4,title1='Original',title2='img2',title3='img3',title4='img4', testing=False):
     if testing == True:
         f, ((ax1, ax2),(ax3,ax4)) = plt.subplots(2, 2, figsize=(24, 9))
         f.tight_layout()

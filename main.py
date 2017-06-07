@@ -181,22 +181,39 @@ def showImages(img1, img2):
 def warp(img):
     img_size = (img.shape[1], img.shape[0])
     # Four source coordinates for realsense img
-    src = np.float32(
-        [[548,5],  # top right
-        [621,471],        # bottom right
-        [55,469],        # bottom left
-        [122,23]])       # top left
-    dst = np.float32(
-        [[550,25],
-        [550,475],
-        [50,475],
-        [50,25]])
+    xmax = img.shape[1]
+    ymax = img.shape[0]
+    offset = 200
+    
+    d_top_left = [300,0]
+    d_top_right = [950,0]
+    d_bottom_right = [950,720]
+    d_bottom_left = [300,720]
 
+    top_right = [681,445]
+    bottom_right = [1048,676]
+    bottom_left = [271,683]
+    top_left = [601,445]
+    
+    src = np.float32(
+        [[681,445],  # top right
+        [1100,720],        # bottom right
+        [200,720],        # bottom left
+        [601,445]])       # top left
+    dst = np.float32(
+        [[d_top_right],  # top right
+        [d_bottom_right],        # bottom right
+        [d_bottom_left],        # bottom left
+        [d_top_left]])       # top left
     M = cv2.getPerspectiveTransform(src,dst)
     Minv = cv2.getPerspectiveTransform(dst,src)
     warped = cv2.warpPerspective(img, M, img_size, flags=cv2.INTER_LINEAR)
-
     return warped
+
+def findLine(img):
+    histogram = np.sum(img[img.shape[0]//2:,:], axis=0)
+    plt.plot(histogram)
+    return
 
 try:
     folder = "camera_cal"
@@ -209,15 +226,11 @@ except:
     # Create new pickle data based on camera calibration and distortion matricies
     calibrateLens(9,6,folder)
 
-testImg = loadImage("test_images/straight_lines1.jpg")
-rs_img = loadImage("birds_eye.jpg")
-# for i in range(3,19,2):
-binary_img = generate_binary_img(testImg, ksize=7)
+testImg = loadImage("test_images/straight_lines2.jpg")
+warped = warp(testImg)
+binary_img = generate_binary_img(warped, ksize=7)
 
-rs_warped = warp(rs_img)
-rs_binary = generate_binary_img(rs_warped, ksize=7)
-
-showImages(rs_warped, rs_binary)
+showImages(testImg, binary_img)
 
 
 

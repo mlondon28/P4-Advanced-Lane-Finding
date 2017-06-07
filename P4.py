@@ -45,7 +45,7 @@ except:
 
 # In[28]:
 
-testImg = loadImage("test_images/test2.jpg")
+testImg = loadImage("test_images/straight_lines1.jpg")
 warped, Minv = warp(testImg)
 binary_img = generate_binary_img(testImg, ksize=7)
 binary_warp = generate_binary_img(warped, ksize=7)
@@ -399,7 +399,7 @@ class VideoProcessor(object):
     def moving_average_curvature(self):
         sum = 0
         N = len(self.past_frames_left)
-        if N > 30:
+        if N > 15:
             self.past_frames_left.pop(0)
             self.past_frames_right.pop(0)
             N = len(self.past_frames_left)
@@ -407,18 +407,11 @@ class VideoProcessor(object):
         l_coeff2 = 0
         l_coeff1 = 0
         l_coeff0 = 0
-
         r_coeff2 = 0
         r_coeff1 = 0
         r_coeff0 = 0
 
         for i in range(0,len(self.past_frames_left)):
-            print(self.past_frames_left)
-            # print(self.past_frames_left.shape)
-            print(i)
-            # n = 0
-            # l_coeff[n] = i
-            # n += 1
             l_coeff2 += self.past_frames_left[i][0]
             l_coeff1 += self.past_frames_left[i][1]
             l_coeff0 += self.past_frames_left[i][2]
@@ -427,23 +420,17 @@ class VideoProcessor(object):
             r_coeff1 += self.past_frames_right[i][1]
             r_coeff0 += self.past_frames_right[i][2]
 
-        # for i in self.past_frames_right:
+        if abs(l_coeff2 - self.best_fit_left[0]) < self.best_fit_left[0]*.150:
+            l_coeff2 = l_coeff2 / N
+            l_coeff1 = l_coeff1 / N
+            l_coeff0 = l_coeff0 / N
+            self.best_fit_left = np.array([l_coeff2, l_coeff1, l_coeff0])
 
-        #     r_coeff2 += self.past_frames_right[i][0]
-        #     r_coeff1 += self.past_frames_right[i][1]
-        #     r_coeff0 += self.past_frames_right[i][2]
-
-        l_coeff2 = l_coeff2 / N
-        l_coeff1 = l_coeff1 / N
-        l_coeff0 = l_coeff0 / N
-
-        r_coeff2 = r_coeff2 / N
-        r_coeff1 = r_coeff1 / N
-        r_coeff0 = r_coeff0 / N
-
-
-        self.best_fit_left = np.array([l_coeff2, l_coeff1, l_coeff0])
-        self.best_fit_right = np.array([r_coeff2, r_coeff1, r_coeff0])
+        elif abs(r_coeff2 - self.best_fit_right[0]) < self.best_fit_right[0]*.15:
+            r_coeff2 = r_coeff2 / N
+            r_coeff1 = r_coeff1 / N
+            r_coeff0 = r_coeff0 / N
+            self.best_fit_right = np.array([r_coeff2, r_coeff1, r_coeff0])
 
         return self.best_fit_left, self.best_fit_right
 
@@ -485,8 +472,8 @@ class VideoProcessor(object):
 
             print('first frame')
         else:
-            self.best_fit_left, self.best_fit_right = self.moving_average_curvature()
             result, left_fitx, right_fitx, ploty, leftx, rightx, left_fit, right_fit = continue_sliding_window(warped, self.best_fit_left, self.best_fit_right)
+            self.best_fit_left, self.best_fit_right = self.moving_average_curvature()
 
             self.past_frames_left.append(left_fit)
             self.past_frames_right.append(right_fit)
@@ -501,13 +488,11 @@ class VideoProcessor(object):
 
 # # Video Processing
 
-# In[ ]:
-
-VideoProcessor = VideoProcessor()
-white_output = 'output_images/short_output.mp4'
-clip1 = VideoFileClip("short_video.mp4")
-white_clip = clip1.fl_image(VideoProcessor.process_frame) #NOTE: this function expects color images!!
-white_clip.write_videofile(white_output, audio=False)
+# VideoProcessor = VideoProcessor()
+# white_output = 'output_images/short_output.mp4'
+# clip1 = VideoFileClip("short_video.mp4")
+# white_clip = clip1.fl_image(VideoProcessor.process_frame) #NOTE: this function expects color images!!
+# white_clip.write_videofile(white_output, audio=False)
 
 
 # In[ ]:
